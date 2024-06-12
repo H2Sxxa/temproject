@@ -4,22 +4,46 @@ use clap::{Parser, Subcommand};
 #[command(name = "temproject")]
 pub struct Cli {
     #[command(subcommand)]
-    commands: Commands,
+    pub command: Commands,
 }
 
 #[derive(Subcommand, Debug)]
 pub enum Commands {
     #[command(arg_required_else_help = true)]
-    /// Create a project from a template
+    /// Init a project from a local template
     New { name: String },
 
-    /// List all available templates
+    /// List all available local templates
     List,
     #[command(arg_required_else_help = true)]
-    /// Add a new template
+    /// Add a new template to local
     Add { name: String },
 
     #[command(arg_required_else_help = true)]
-    /// Remove a new template
+    /// Remove a new template from local
+    Remove { name: String },
+
+    #[command(arg_required_else_help = true)]
+    /// Access the templates from Internet
+    Net {
+        #[command(subcommand)]
+        command: NetCommands,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum NetCommands {
+    #[command(arg_required_else_help = true)]
+    /// Init a project from a local template
+    New { name: String },
+
+    /// List all available local templates
+    List,
+    #[command(arg_required_else_help = true)]
+    /// Add a new template to local
+    Add { name: String },
+
+    #[command(arg_required_else_help = true)]
+    /// Remove a new template from local
     Remove { name: String },
 }
